@@ -1,0 +1,11 @@
+setup rubymine:
+sudo /home/vagrant/.RubyMine70/system/tmp/launcher_installer0.sh
+
+
+sudo -i -u postgres
+createuser --interactive
+
+rake db:create
+rake db:migrate
+
+
