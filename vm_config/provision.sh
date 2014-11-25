@@ -40,20 +40,20 @@ if [ -e .oh_my_zsh_installed ]
   then echo 'oh-my-zsh installed - skipping'
   else
     curl -L http://install.ohmyz.sh | sh
-    chsh -s $(which zsh)
+    sudo chsh -s $(which zsh) vagrant
     touch .oh_my_zsh_installed
 fi
 echo 'install oh-my-zsh FINISH'
 
-#echo 'install RubyMine START'
-#if [ -e .rubymine_installed ]
-#  then echo 'rubymine installed - skipping'
-#  else
-#    wget 'http://download.jetbrains.com/ruby/RubyMine-7.0.tar.gz'
-#    tar xfz RubyMine-7.0.tar.gz
-#    touch .rubymine_installed
-#fi 
-#echo 'install RubyMine FINISH'
+echo 'install RubyMine START'
+if [ -e .rubymine_installed ]
+  then echo 'rubymine installed - skipping'
+  else
+    wget 'http://download.jetbrains.com/ruby/RubyMine-7.0.tar.gz'
+    tar xfz RubyMine-7.0.tar.gz
+    touch .rubymine_installed
+fi 
+echo 'install RubyMine FINISH'
 
 echo 'get permissions to rvm/rubies START'
 sudo chmod -R a=rwx /usr/local/rvm/rubies
