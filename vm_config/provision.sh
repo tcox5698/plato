@@ -39,8 +39,7 @@ echo 'install oh-my-zsh START'
 if [ -e .oh_my_zsh_installed ]
   then echo 'oh-my-zsh installed - skipping'
   else
-    curl -L http://install.ohmyz.sh | sh
-    sudo chsh -s $(which zsh) vagrant
+    su -l vagrant /vagrant/vm_config/install_oh_my_zsh.sh
     touch .oh_my_zsh_installed
 fi
 echo 'install oh-my-zsh FINISH'
@@ -49,7 +48,8 @@ echo 'install RubyMine START'
 if [ -e .rubymine_installed ]
   then echo 'rubymine installed - skipping'
   else
-    wget 'http://download.jetbrains.com/ruby/RubyMine-7.0.tar.gz'
+    cp /vagrant/RubyMine-7.0.tar.gz ~/
+    #wget 'http://download.jetbrains.com/ruby/RubyMine-7.0.tar.gz'
     tar xfz RubyMine-7.0.tar.gz
     touch .rubymine_installed
 fi 
