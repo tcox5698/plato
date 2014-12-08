@@ -1,0 +1,3 @@
+rails generate model idea name:string description:string profit_rating:integer skill_rating:integer passion_rating:integer
+
+rails generate scaffold_controller Idea name description profit_rating skill_rating passion_rating
