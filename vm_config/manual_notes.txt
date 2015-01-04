@@ -9,3 +9,4 @@ rake db:create
 rake db:migrate
 
 
+create role plato with createdb login password 'password1'
