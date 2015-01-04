@@ -1,22 +1,22 @@
 <%- model_class = Idea -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <h1><%= t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
 <table class="table table-striped">
   <thead>
-    <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:description) %></th>
-      <th><%= model_class.human_attribute_name(:profit_rating) %></th>
-      <th><%= model_class.human_attribute_name(:skill_rating) %></th>
-      <th><%= model_class.human_attribute_name(:passion_rating) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
+  <tr>
+    <th><%= model_class.human_attribute_name(:id) %></th>
+    <th><%= model_class.human_attribute_name(:name) %></th>
+    <th><%= model_class.human_attribute_name(:description) %></th>
+    <th><%= model_class.human_attribute_name(:profit_rating) %></th>
+    <th><%= model_class.human_attribute_name(:skill_rating) %></th>
+    <th><%= model_class.human_attribute_name(:passion_rating) %></th>
+    <th><%= model_class.human_attribute_name(:created_at) %></th>
+    <th><%= t '.actions', :default => t("helpers.actions") %></th>
+  </tr>
   </thead>
   <tbody>
-    <% @ideas.each do |idea| %>
+  <% @ideas.each do |idea| %>
       <tr>
         <td><%= link_to idea.id, idea_path(idea) %></td>
         <td><%= idea.name %></td>
@@ -24,7 +24,7 @@
         <td><%= idea.profit_rating %></td>
         <td><%= idea.skill_rating %></td>
         <td><%= idea.passion_rating %></td>
-        <td><%=l idea.created_at %></td>
+        <td><%= local_time(idea.created_at) %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_idea_path(idea), :class => 'btn btn-default btn-xs' %>
@@ -35,7 +35,7 @@
                       :class => 'btn btn-xs btn-danger' %>
         </td>
       </tr>
-    <% end %>
+  <% end %>
   </tbody>
 </table>
 
