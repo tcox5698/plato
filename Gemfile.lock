@@ -55,6 +55,8 @@ GEM
       actionpack (>= 3.1)
       less (~> 2.6.0)
     libv8 (3.16.14.7)
+    local_time (1.0.1)
+      coffee-rails
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     mime-types (2.4.3)
@@ -151,6 +153,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   less-rails
+  local_time
   rails (= 4.1.8)
   rspec
   rspec-rails
