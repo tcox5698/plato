@@ -1,3 +1,6 @@
 rails generate model idea name:string description:string profit_rating:integer skill_rating:integer passion_rating:integer
 
-rails generate scaffold_controller Idea name description profit_rating skill_rating passion_rating
+rails generate scaffold Idea name:string description:string profit_rating:integer skill_rating:integer passion_rating:integer
+
+
+getting rubymine pointed at the right remote-ruby on vagrant instance is tricky - and perhaps fragile.
