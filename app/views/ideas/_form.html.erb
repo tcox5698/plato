@@ -1,37 +1,59 @@
-<%= form_for(@idea) do |f| %>
-  <% if @idea.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@idea.errors.count, "error") %> prohibited this idea from being saved:</h2>
+<%= form_for @idea, :html => { :class => "form-horizontal idea" } do |f| %>
 
-      <ul>
-      <% @idea.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <% if @idea.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@idea.errors.count, "error") %> prohibited this idea from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @idea.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <%= error_span(@idea[:name]) %>
   </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
+  <div class="control-group">
+    <%= f.label :description, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :description, :class => 'form-control' %>
+    </div>
+    <%= error_span(@idea[:description]) %>
   </div>
-  <div class="field">
-    <%= f.label :profit_rating %><br>
-    <%= f.number_field :profit_rating %>
+  <div class="control-group">
+    <%= f.label :profit_rating, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :profit_rating, :class => 'form-control' %>
+    </div>
+    <%= error_span(@idea[:profit_rating]) %>
   </div>
-  <div class="field">
-    <%= f.label :skill_rating %><br>
-    <%= f.number_field :skill_rating %>
+  <div class="control-group">
+    <%= f.label :skill_rating, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :skill_rating, :class => 'form-control' %>
+    </div>
+    <%= error_span(@idea[:skill_rating]) %>
   </div>
-  <div class="field">
-    <%= f.label :passion_rating %><br>
-    <%= f.number_field :passion_rating %>
+  <div class="control-group">
+    <%= f.label :passion_rating, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :passion_rating, :class => 'form-control' %>
+    </div>
+    <%= error_span(@idea[:passion_rating]) %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            ideas_path, :class => 'btn btn-default' %>
+
 <% end %>
