@@ -12,4 +12,6 @@ RSpec.describe Idea, :type => :model do
   it { is_expected.to validate_numericality_of(:skill_rating).only_integer.is_less_than(6).is_greater_than(0) }
 
   it { is_expected.to validate_presence_of(:name) }
+
+  it { is_expected.to allow_value(nil).for(:description)}
 end

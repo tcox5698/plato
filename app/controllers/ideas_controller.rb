@@ -14,7 +14,7 @@ class IdeasController < ApplicationController
 
   # GET /ideas/new
   def new
-    @idea = Idea.new
+    @idea = Idea.new passion_rating: 1, skill_rating: 1, profit_rating: 1
   end
 
   # GET /ideas/1/edit
