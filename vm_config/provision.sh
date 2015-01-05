@@ -48,6 +48,15 @@ if [ -e .rubymine_installed ]
 fi
 echo 'install RubyMine FINISH'
 
-echo 'get permissions to rvm/rubies START'
-sudo chmod -R a=rwx /usr/local/rvm/rubies
-echo 'get permissions to rvm/rubies FINISH'
+#echo 'get permissions to rvm/rubies START'
+#sudo chmod -R a=rwx /usr/local/rvm/rubies
+#echo 'get permissions to rvm/rubies FINISH'
+
+echo 'install heroku toolbelt'
+if [ -e .heroku_toolbelt_installed ]
+  then echo 'heroku toolbelt installed - skipping'
+  else
+    wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+    touch .heroku_toolbelt_installed
+fi
+echo 'install heroku toolbelt FINISH'
