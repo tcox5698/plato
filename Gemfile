@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby "2.1.5"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.8'
@@ -34,6 +35,8 @@ gem 'less-rails'
 gem 'twitter-bootstrap-rails'
 
 gem 'local_time'
+
+gem 'rails_12factor', group: :production
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
