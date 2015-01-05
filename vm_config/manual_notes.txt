@@ -10,3 +10,5 @@ rake db:migrate
 
 
 create role plato with createdb login password 'password1'
+
+heroku pg:reset $HEROKU_POSTGRESQL_CRIMSON_URL
