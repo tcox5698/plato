@@ -37,16 +37,16 @@ fi
 echo 'install ruby and rails FINISH'
 
 
-echo 'install RubyMine START'
-if [ -e .rubymine_installed ]
-  then echo 'rubymine installed - skipping'
-  else
-    cp /vagrant/RubyMine-7.0.tar.gz ~/
-    #wget 'http://download.jetbrains.com/ruby/RubyMine-7.0.tar.gz'
-    tar xfz RubyMine-7.0.tar.gz
-    touch .rubymine_installed
-fi
-echo 'install RubyMine FINISH'
+#echo 'install RubyMine START'
+#if [ -e .rubymine_installed ]
+#  then echo 'rubymine installed - skipping'
+#  else
+#    cp /vagrant/RubyMine-7.0.tar.gz ~/
+#    #wget 'http://download.jetbrains.com/ruby/RubyMine-7.0.tar.gz'
+#    tar xfz RubyMine-7.0.tar.gz
+#    touch .rubymine_installed
+#fi
+#echo 'install RubyMine FINISH'
 
 #echo 'get permissions to rvm/rubies START'
 #sudo chmod -R a=rwx /usr/local/rvm/rubies

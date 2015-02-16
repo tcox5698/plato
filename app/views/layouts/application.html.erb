@@ -48,8 +48,18 @@
     <%= link_to "Plato", root_url, { :class => "navbar-brand" } %>
     <div class="navbar-collapse collapse navbar-responsive-collapse">
       <ul class="nav navbar-nav">
-        <!--<li><%= link_to "Link1", "/path1" %></li>-->
-        <!--<li><%= link_to "Link2", "/path2" %></li>-->
+        <li>
+        <% if current_user %>
+            <%= link_to "Edit Profile", edit_user_path(current_user.id) %>
+        <% else %>
+            <%= link_to "Register", new_user_path %>
+        <% end %></li>
+        <li>
+        <% if current_user %>
+            <%= link_to "Logout", :logout, method: :post %>
+        <% else %>
+            <%= link_to "Login", :login %>
+        <% end %></li>
         <!--<li><%= link_to "Link3", "/path3" %></li>-->
       </ul>
     </div>
