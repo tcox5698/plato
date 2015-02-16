@@ -1,3 +1,13 @@
+GIT
+  remote: http://github.com/NoamB/sorcery.git
+  revision: 43777996ae762d763035964c68a241c3475b3e2d
+  branch: master
+  specs:
+    sorcery (0.9.0)
+      bcrypt (~> 3.1)
+      oauth (~> 0.4, >= 0.4.4)
+      oauth2 (>= 0.8.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -38,11 +48,16 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     commonjs (0.2.7)
+    debase (0.1.2)
+      debase-ruby_core_source
+    debase-ruby_core_source (0.7.5)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.2.2)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
+    figaro (1.1.0)
+      thor (~> 0.14)
     hike (1.2.3)
     i18n (0.6.11)
     jbuilder (2.2.5)
@@ -123,6 +138,8 @@ GEM
       rspec-mocks (~> 3.1.0)
       rspec-support (~> 3.1.0)
     rspec-support (3.1.2)
+    ruby-debug-ide (0.4.27)
+      rake (>= 0.8.1)
     sass (3.2.19)
     sass-rails (4.0.5)
       railties (>= 4.0.0, < 5.0)
@@ -134,10 +151,6 @@ GEM
       rdoc (~> 4.0)
     shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
-    sorcery (0.9.0)
-      bcrypt (~> 3.1)
-      oauth (~> 0.4, >= 0.4.4)
-      oauth2 (>= 0.8.0)
     spring (1.2.0)
     sprockets (2.12.3)
       hike (~> 1.2)
@@ -172,6 +185,8 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  debase
+  figaro
   jbuilder (~> 2.0)
   jquery-rails
   less-rails
@@ -181,10 +196,11 @@ DEPENDENCIES
   rails_12factor
   rspec
   rspec-rails
+  ruby-debug-ide
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   shoulda-matchers
-  sorcery
+  sorcery!
   spring
   therubyracer
   turbolinks
