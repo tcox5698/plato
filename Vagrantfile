@@ -21,6 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # accessing "localhost:8080" will access port 80 on the guest machine.
   config.vm.network "forwarded_port", guest: 8000, host: 8112, auto_correct: true
   config.vm.network "forwarded_port", guest: 3000, host: 3112, auto_correct: true
+  config.vm.network "forwarded_port", guest: 1234, host: 61234, auto_correct: true
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -50,7 +51,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     #vb.gui = true
 
     # Use VBoxManage to customize the VM. For example to change memory:
+    #vb.customize ["modifyvm", :id, "--memory","8192"]
     vb.customize ["modifyvm", :id, "--memory","4096"]
+
     vb.customize ["modifyvm", :id, "--cpus","2"]
   end
   #
