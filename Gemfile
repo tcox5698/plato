@@ -29,10 +29,6 @@ gem 'spring', group: :development
 gem 'ruby-debug-ide', group: [:development,:test]
 gem 'debase', group: [:development,:test]
 
-gem 'rspec-rails', group: [:test]
-gem 'rspec', group: [:test]
-gem 'shoulda-matchers', group: [:test]
-
 gem 'therubyracer'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
@@ -42,13 +38,15 @@ gem 'local_time'
 gem 'sorcery', :git => 'http://github.com/NoamB/sorcery.git', :branch => 'master'
 
 gem 'rails_12factor', group: :production
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 
 gem 'newrelic_rpm'
+
+group :test do
+  gem 'shoulda-matchers'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'cucumber-rails', :require => false
+  gem 'database_cleaner'
+  gem 'capybara-webkit'
+  gem 'headless'
+end

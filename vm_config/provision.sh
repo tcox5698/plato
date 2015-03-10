@@ -13,7 +13,7 @@ if [ -e .packages_installed ]
   then echo 'packages installed - skipping'
   else
     sudo apt-get update
-    sudo apt-get --assume-yes install default-jre git postgresql curl zsh libpq-dev nodejs npm > /dev/null
+    sudo apt-get --assume-yes install default-jre git postgresql curl zsh libpq-dev nodejs npm qt5-default libqt5webkit5-dev xvfb > /dev/null
     touch .packages_installed
 fi
 echo 'install packages FINISH'
