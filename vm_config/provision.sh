@@ -19,14 +19,23 @@ if [ -e .packages_installed ]
 fi
 echo 'install packages FINISH'
 
-echo 'install ruby and rails START'
-if [ -e .ruby_rails_installed ]
-  then echo 'ruby and rails installed - skipping'
+echo 'install rvm START'
+if [ -e .rvm_installed ]
+  then echo 'rvm installed - skipping'
   else
-    su -l vagrant /vagrant/vm_config/install_ruby_rails.sh
-    touch .ruby_rails_installed
+    su -l vagrant /vagrant/vm_config/install_rvm.sh
+    touch .rvm_installed
 fi
-echo 'install ruby and rails FINISH'
+echo 'install rvm FINISH'
+
+echo 'install ruby START'
+if [ -e .ruby_installed ]
+  then echo 'ruby_installed - skipping'
+  else
+    su -l vagrant /vagrant/vm_config/install_ruby.sh
+    touch .ruby_installed
+fi
+echo 'install ruby FINISH'
 
 echo 'install oh-my-zshell START'
 if [ -e .oh_my_zshell_installed ]
