@@ -19,15 +19,6 @@ if [ -e .packages_installed ]
 fi
 echo 'install packages FINISH'
 
-echo 'install prezto START'
-if [ -e .prezto_installed ]
-  then echo 'prezto installed - skipping'
-  else
-    su -c '/bin/zsh /vagrant/vm_config/install_prezto.sh' vagrant
-    touch .prezto_installed
-fi
-echo 'install prezto FINISH'
-
 echo 'install ruby and rails START'
 if [ -e .ruby_rails_installed ]
   then echo 'ruby and rails installed - skipping'
@@ -37,17 +28,25 @@ if [ -e .ruby_rails_installed ]
 fi
 echo 'install ruby and rails FINISH'
 
-
-echo 'install RubyMine START'
-if [ -e .rubymine_installed ]
-  then echo 'rubymine installed - skipping'
+echo 'install oh-my-zshell START'
+if [ -e .oh_my_zshell_installed ]
+  then echo 'oh-my-zshell installed - skipping'
   else
-    cp /vagrant/RubyMine-7.0.tar.gz ~/
-#    #wget 'http://download.jetbrains.com/ruby/RubyMine-7.0.tar.gz'
-    tar xzf RubyMine-7.0.tar.gz
-    touch .rubymine_installed
+    su -c '/bin/zsh /vagrant/vm_config/install_oh_my_zsh.sh' vagrant
+    touch .oh_my_zshell_installed
 fi
-echo 'install RubyMine FINISH'
+echo 'install oh-my-zshell FINISH'
+
+#echo 'install RubyMine START'
+#if [ -e .rubymine_installed ]
+#  then echo 'rubymine installed - skipping'
+#  else
+#    cp /vagrant/RubyMine-7.0.tar.gz ~/
+##    #wget 'http://download.jetbrains.com/ruby/RubyMine-7.0.tar.gz'
+#    tar xzf RubyMine-7.0.tar.gz
+#    touch .rubymine_installed
+#fi
+#echo 'install RubyMine FINISH'
 
 #echo 'get permissions to rvm/rubies START'
 #sudo chmod -R a=rwx /usr/local/rvm/rubies
