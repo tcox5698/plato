@@ -1,6 +1,8 @@
 setup rubymine:
 sudo /home/vagrant/.RubyMine70/system/tmp/launcher_installer0.sh
 
+  git config --global user.email "tcox56_98@yahoo.com"
+  git config --global user.name "Tom Cox"
 
 sudo -i -u postgres
 createuser --interactive
@@ -16,3 +18,5 @@ rake db:migrate
 
 heroku pg:reset $HEROKU_POSTGRESQL_CRIMSON_URL
 
+add to zshrc:
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
