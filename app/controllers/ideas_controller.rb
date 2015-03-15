@@ -1,5 +1,5 @@
 class IdeasController < ApplicationController
-  skip_before_filter :require_login
+  #skip_before_filter :require_login
   before_action :set_idea, only: [:show, :edit, :update, :destroy]
 
   # GET /ideas

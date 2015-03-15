@@ -6,3 +6,4 @@ Feature: Landing page
     And I navigate to home page
     Then I see the landing page
     And I see a login link
+    And I see no error messages

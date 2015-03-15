@@ -41,6 +41,8 @@ gem 'rails_12factor', group: :production
 
 gem 'newrelic_rpm'
 
+gem 'annotate'
+
 group :test do
   gem 'shoulda-matchers'
   gem 'rspec'
