@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :ideas
 
-  root 'ideas#index'
+  root 'home#index'
 
   get 'login' => 'user_sessions#new', :as => :login
   post 'logout' => 'user_sessions#destroy', :as => :logout

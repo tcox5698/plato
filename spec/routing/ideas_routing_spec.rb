@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe IdeasController, :type => :routing do
+describe IdeasController, :type => :routing do
   describe "routing" do
 
     it "routes to #index" do

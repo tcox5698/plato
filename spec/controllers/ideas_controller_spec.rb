@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe IdeasController, :type => :controller do
+describe IdeasController, :type => :controller do
 
   let(:valid_attributes) {
     { name: 'idea name', passion_rating: 1, skill_rating: 2, profit_rating: 3 }
@@ -13,26 +13,58 @@ RSpec.describe IdeasController, :type => :controller do
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # IdeasController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+  # let(:valid_session) { {} }
+
+  def valid_session
+    { "warden.user.user.key" => session["warden.user.user.key"] }
+  end
+
+  let(:user_authenticated) { true }
+
+  before do
+    @user = User.create!(email: 'Bob@nancy.com', password: 'secret!1', password_confirmation: 'secret!1')
+    if user_authenticated
+      login_user
+    end
+  end
 
   describe "GET index" do
-    it "assigns all ideas as @ideas" do
-      idea = Idea.create! valid_attributes
-      get :index, {}, valid_session
-      expect(assigns(:ideas)).to eq([idea])
+    context 'when user is anonymous' do
+      let(:user_authenticated) { false }
+      it 'redirects to login page' do
+        get :index, {}
+        expect(response).to redirect_to '/login'
+      end
+    end
+    context 'when user is authenticated' do
+      before do
+        @idea = Idea.create! valid_attributes
+        get :index, {}, valid_session
+      end
+
+      it 'assigns all ideas as @ideas' do
+        expect(assigns(:ideas)).to eq([@idea])
+      end
+
+      it 'renders the ideas template' do
+        expect(response.status).to eq 200
+        expect(response).to render_template :index
+      end
     end
   end
 
   describe "GET show" do
-    it "assigns the requested idea as @idea" do
-      idea = Idea.create! valid_attributes
-      get :show, { :id => idea.to_param }, valid_session
-      expect(assigns(:idea)).to eq(idea)
+    context 'user is authenticated' do
+      it "assigns the requested idea as @idea" do
+        idea = Idea.create! valid_attributes
+        get :show, { :id => idea.to_param }, valid_session
+        expect(assigns(:idea)).to eq(idea)
+      end
     end
   end
 
-  describe "GET new" do
-    it "assigns a new idea as @idea" do
+  describe 'GET new' do
+    it 'assigns a new idea as @idea' do
       get :new, {}, valid_session
       expect(assigns(:idea)).to be_a_new(Idea)
     end

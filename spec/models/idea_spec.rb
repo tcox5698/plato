@@ -15,3 +15,17 @@ RSpec.describe Idea, :type => :model do
 
   it { is_expected.to allow_value(nil).for(:description)}
 end
+
+# == Schema Information
+#
+# Table name: ideas
+#
+#  id             :integer          not null, primary key
+#  name           :string(255)
+#  description    :string(255)
+#  profit_rating  :integer
+#  skill_rating   :integer
+#  passion_rating :integer
+#  created_at     :datetime
+#  updated_at     :datetime
+#
