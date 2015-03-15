@@ -13,9 +13,6 @@ bundle install
 rake db:create
 rake db:migrate
 
-
-
-
 heroku pg:reset $HEROKU_POSTGRESQL_CRIMSON_URL
 
 add to zshrc:
