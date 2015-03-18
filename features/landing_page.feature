@@ -1,6 +1,6 @@
+@javascript
 Feature: Landing page
 
-  @javascript
   Scenario: Anonymous user sees landing page
     When I am not logged in
     And I navigate to home page

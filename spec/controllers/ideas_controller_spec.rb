@@ -23,9 +23,7 @@ describe IdeasController, :type => :controller do
 
   before do
     @user = User.create!(email: 'Bob@nancy.com', password: 'secret!1', password_confirmation: 'secret!1')
-    if user_authenticated
-      login_user
-    end
+    login_user if user_authenticated
   end
 
   describe "GET index" do
@@ -36,6 +34,7 @@ describe IdeasController, :type => :controller do
         expect(response).to redirect_to '/login'
       end
     end
+
     context 'when user is authenticated' do
       before do
         @idea = Idea.create! valid_attributes
@@ -53,9 +52,9 @@ describe IdeasController, :type => :controller do
     end
   end
 
-  describe "GET show" do
+  describe 'GET show' do
     context 'user is authenticated' do
-      it "assigns the requested idea as @idea" do
+      it 'assigns the requested idea as @idea' do
         idea = Idea.create! valid_attributes
         get :show, { :id => idea.to_param }, valid_session
         expect(assigns(:idea)).to eq(idea)
