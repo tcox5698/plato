@@ -108,14 +108,8 @@ describe UsersController, :type => :controller do
         let(:other_users_exist) { true }
         let(:requested_user_id) { @other_users[0].id.to_s }
         describe 'the response' do
-          it 'renders the index' do
-            expect(response).to render_template :index
-          end
-          it 'assigns the current user to users' do
-            expect(assigns(:users)).to eq [@user]
-          end
-          it 'puts an error in flash' do
-            expect(flash[:alert]).to eq 'You made an invalid request.'
+          it 'returns status code of not_found' do
+            expect(response.code).to eq '404'
           end
         end
       end
