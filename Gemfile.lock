@@ -11,6 +11,8 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    acl9 (1.2.1)
+      rails (~> 4.0)
     actionmailer (4.1.8)
       actionpack (= 4.1.8)
       actionview (= 4.1.8)
@@ -219,6 +221,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acl9
   annotate
   capybara-webkit
   coffee-rails (~> 4.0.0)

@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  acts_as_authorization_subject
+  acts_as_authorization_object 
   authenticates_with_sorcery! do |config|
     config.authentications_class = Authentication
   end
