@@ -8,6 +8,7 @@ Feature: Ideas page
     And I see a login link
     And I see the 'Please login' error message
 
+  @wip
   Scenario: User sees only their own ideas
     Given the following users
       | email           | password   |
