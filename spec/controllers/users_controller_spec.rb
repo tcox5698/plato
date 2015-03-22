@@ -75,12 +75,14 @@ describe UsersController, :type => :controller do
 
   describe 'GET show' do
     let(:requested_user_id) { @user.to_param }
-    before do
-      get :show, { :id => requested_user_id }
-    end
+
 
     context 'when user is not authenticated' do
+
       let(:user_authenticated) { false }
+      before do
+        get :show, { :id => requested_user_id }
+      end
       describe 'the response' do
         it 'redirects to login page' do
           expect(response).to redirect_to '/login'
@@ -95,6 +97,9 @@ describe UsersController, :type => :controller do
     context 'when user is authenticated' do
       let(:user_authenticated) { true }
       context 'when requesting current user' do
+        before do
+          get :show, { :id => requested_user_id }
+        end
         it 'assigns the current user' do
           expect(assigns(:user)).to eq @user
           expect(assigns(:users)).to be_nil
@@ -104,13 +109,12 @@ describe UsersController, :type => :controller do
           expect(response).to render_template :show
         end
       end
+
       context 'when requesting some other existing user' do
         let(:other_users_exist) { true }
         let(:requested_user_id) { @other_users[0].id.to_s }
-        describe 'the response' do
-          it 'returns status code of not_found' do
-            expect(response.code).to eq '404'
-          end
+        it 'throws 404 exception' do
+          expect { get(:show, { :id => requested_user_id }) }.to raise_error(ActionController::RoutingError, 'Not found')
         end
       end
     end
