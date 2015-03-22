@@ -11,12 +11,8 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-
     if params[:id].to_i != current_user.id
-      head(:not_found)
-      # @users = [current_user]
-      # flash[:alert] = 'You made an invalid request.'
-      # render :index
+      raise ActionController::RoutingError.new 'Not found'
     end
   end
 
