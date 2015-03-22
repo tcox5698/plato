@@ -1,4 +1,5 @@
 class Idea < ActiveRecord::Base
+  acts_as_authorization_object 
   validates :name, presence: true
   validates_numericality_of :passion_rating, :only_integer => true, :less_than => 6, :greater_than => 0
   validates_numericality_of :skill_rating, :only_integer => true, :less_than => 6, :greater_than => 0
