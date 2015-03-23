@@ -5,7 +5,7 @@ class IdeasController < ApplicationController
   # GET /ideas
   # GET /ideas.json
   def index
-    @ideas = Idea.all
+    @ideas = current_user.ideas
   end
 
   # GET /ideas/1
@@ -29,6 +29,7 @@ class IdeasController < ApplicationController
 
     respond_to do |format|
       if @idea.save
+        current_user.has_role! :owner, @idea
         format.html { redirect_to @idea, notice: 'Idea was successfully created.' }
         format.json { render :show, status: :created, location: @idea }
       else

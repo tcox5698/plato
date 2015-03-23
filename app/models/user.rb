@@ -17,6 +17,10 @@ class User < ActiveRecord::Base
   def has_linked_github?
     authentications.where(provider: 'github').present?
   end
+
+  def ideas
+    Idea.owned_by self
+  end
 end
 
 # == Schema Information
