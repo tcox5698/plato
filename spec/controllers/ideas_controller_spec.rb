@@ -24,7 +24,7 @@ describe IdeasController, :type => :controller do
   before do
     @user = User.create!(email: 'Bob@nancy.com', password: 'secret!1', password_confirmation: 'secret!1')
     @other_user = User.create!(email: 'nancy@here.com', password: 'secret!2', password_confirmation: 'secret!2')
-    login_user if user_authenticated
+    login_user(@user) if user_authenticated
   end
 
   describe 'GET index' do
@@ -59,11 +59,35 @@ describe IdeasController, :type => :controller do
   end
 
   describe 'GET show' do
+    let(:user_owns_idea) { false }
+    before do
+      @idea = Idea.create! valid_attributes
+      @user.has_role!(:owner, @idea) if user_owns_idea
+      begin
+        get :show, { :id => @idea.to_param }, valid_session
+      rescue => e
+        @actual_exception = e
+      end
+
+    end
+
     context 'user is authenticated' do
-      it 'assigns the requested idea as @idea' do
-        idea = Idea.create! valid_attributes
-        get :show, { :id => idea.to_param }, valid_session
-        expect(assigns(:idea)).to eq(idea)
+      context 'when user owns the requested idea' do
+        let(:user_owns_idea) { true }
+        it 'assigns the requested idea as @idea' do
+          expect(assigns(:idea)).to eq(@idea)
+        end
+
+        it 'completes without exception' do
+          expect(@actual_exception).to be_nil
+        end
+      end
+      context 'when user does NOT own the requested idea' do
+        describe 'the exception' do
+          it 'is an Acl9::AccessDenied' do
+            expect(@actual_exception.message).to eq 'Acl9::AccessDenied'
+          end
+        end
       end
     end
   end
@@ -76,10 +100,31 @@ describe IdeasController, :type => :controller do
   end
 
   describe 'GET edit' do
-    it 'assigns the requested idea as @idea' do
-      idea = Idea.create! valid_attributes
-      get :edit, { :id => idea.to_param }, valid_session
-      expect(assigns(:idea)).to eq(idea)
+    before do
+      @idea = Idea.create! valid_attributes
+    end
+    context 'when user not authenticated' do
+      let(:user_authenticated) { false }
+
+      it 'redirects to login page' do
+        @user.has_role! :owner, @idea
+        get :edit, { :id => @idea.to_param }, valid_session
+        expect(response).to redirect_to('/login')
+      end
+    end
+
+    context 'when user authenticated but requesting someone elses idea' do
+      it 'raises access denied exception' do
+        expect { get :edit, { :id => @idea.to_param }, valid_session }.to raise_exception Acl9::AccessDenied
+      end
+    end
+
+    context 'when user authenticated and requesting own idea' do
+      it 'assigns the requested idea as @idea' do
+        @user.has_role! :owner, @idea
+        get :edit, { :id => @idea.to_param }, valid_session
+        expect(assigns(:idea)).to eq @idea
+      end
     end
   end
 
@@ -134,64 +179,96 @@ describe IdeasController, :type => :controller do
     end
   end
 
-  describe "PUT update" do
+  describe 'PUT update' do
     let(:idea) { Idea.create! valid_attributes }
+    let(:user_owns_idea) { true }
 
     before do
-      put :update, { :id => idea.to_param, :idea => update_attributes }, valid_session
+      @user.has_role!(:owner, idea) if user_owns_idea
+      begin
+        put :update, { :id => idea.to_param, :idea => update_attributes }, valid_session
+      rescue => e
+        @actual_exception = e
+      end
+
       idea.reload
     end
 
-    context "with valid params" do
+    context 'when authenticated user does NOT own the idea' do
+      let(:user_owns_idea) { false }
       let(:update_attributes) {
         { name: 'updated idea name', description: 'updated description', passion_rating: 2, skill_rating: 3, profit_rating: 4 }
       }
-
-      it "updates the requested idea" do
-        expect(idea[:name]).to eq update_attributes[:name]
-        expect(idea[:description]).to eq update_attributes[:description]
-        expect(idea[:passion_rating]).to eq update_attributes[:passion_rating]
-        expect(idea[:skill_rating]).to eq update_attributes[:skill_rating]
-        expect(idea[:profit_rating]).to eq update_attributes[:profit_rating]
-      end
-
-      it "assigns the requested idea as @idea" do
-        expect(assigns(:idea)).to eq(idea)
-      end
-
-      it "redirects to the idea" do
-        expect(response).to redirect_to(idea)
+      it 'raises access denied exception' do
+        expect(@actual_exception).to be_a Acl9::AccessDenied
       end
     end
 
-    context "with invalid params" do
+    context 'when anonymous user' do
+      let(:user_authenticated) { false }
       let(:update_attributes) {
-        { name: nil }
+        { name: 'updated idea name', description: 'updated description', passion_rating: 2, skill_rating: 3, profit_rating: 4 }
       }
+      it 'redirects to login' do
+        expect(response).to redirect_to login_path
+      end
+    end
 
-      it "assigns the idea as @idea" do
-        expect(assigns(:idea)).to eq(idea)
+    context 'when authenticated user owns the idea' do
+      context 'with valid params' do
+        let(:update_attributes) {
+          { name: 'updated idea name', description: 'updated description', passion_rating: 2, skill_rating: 3, profit_rating: 4 }
+        }
+
+        it 'updates the requested idea' do
+          expect(idea[:name]).to eq update_attributes[:name]
+          expect(idea[:description]).to eq update_attributes[:description]
+          expect(idea[:passion_rating]).to eq update_attributes[:passion_rating]
+          expect(idea[:skill_rating]).to eq update_attributes[:skill_rating]
+          expect(idea[:profit_rating]).to eq update_attributes[:profit_rating]
+        end
+
+        it 'assigns the requested idea as @idea' do
+          expect(assigns(:idea)).to eq(idea)
+        end
+
+        it 'redirects to the idea' do
+          expect(response).to redirect_to(idea)
+        end
       end
 
-      it "re-renders the 'edit' template" do
-        expect(response).to render_template("edit")
+      context 'with invalid params' do
+        let(:update_attributes) {
+          { name: nil }
+        }
+
+        it 'assigns the idea as @idea' do
+          expect(assigns(:idea)).to eq(idea)
+        end
+
+        it "re-renders the 'edit' template" do
+          expect(response).to render_template('edit')
+        end
       end
     end
   end
 
-  describe "DELETE destroy" do
-    it "destroys the requested idea" do
-      idea = Idea.create! valid_attributes
-      expect {
+  describe 'DELETE destroy' do
+    let(:idea) { Idea.create! valid_attributes }
+    before do
+      @user.has_role! :owner, idea
+    end
+    context 'when authenticated user owns idea' do
+      it 'destroys the requested idea' do
+        expect {
+          delete :destroy, { :id => idea.to_param }, valid_session
+        }.to change(Idea, :count).by(-1)
+      end
+
+      it 'redirects to the ideas list' do
         delete :destroy, { :id => idea.to_param }, valid_session
-      }.to change(Idea, :count).by(-1)
-    end
-
-    it "redirects to the ideas list" do
-      idea = Idea.create! valid_attributes
-      delete :destroy, { :id => idea.to_param }, valid_session
-      expect(response).to redirect_to(ideas_url)
+        expect(response).to redirect_to(ideas_url)
+      end
     end
   end
-
 end

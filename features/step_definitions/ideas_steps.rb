@@ -39,3 +39,12 @@ When(/^I create idea '(.*)' as user '(.*)' with password '(.*)'$/) do |idea_name
   expect(page).to have_content 'Idea was successfully created.'
   expect(page).to have_content idea_name
 end
+
+When(/^I go directly to the idea '(.*)'$/) do |idea_name|
+  idea = Idea.find_by_name idea_name
+  visit "/ideas/#{idea.id}"
+end
+
+Then(/^I do not see idea '(.*)'$/) do |idea_name|
+  expect(page).not_to have_content idea_name
+end

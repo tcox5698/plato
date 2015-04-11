@@ -62,6 +62,10 @@ headless.start
 
 Capybara.javascript_driver = :webkit
 
+Rails.application.configure do
+  config.consider_all_requests_local = false
+end
+
 Before do |scenario|
   @step = 0
 end

@@ -23,6 +23,7 @@ Feature: Ideas page
       | idea_name  |
       | bob's idea |
 
+  @allow-rescue
   Scenario: User owns ideas they create
     Given the following users
       | email           | password   |
@@ -35,3 +36,7 @@ Feature: Ideas page
     Then I see only the following ideas
       | idea_name  |
       | bobs idea |
+    When I go directly to the idea 'nancys idea'
+    Then I do not see idea 'nancys idea'
+    Then I see the error 'We're sorry, but something went wrong.'
+
