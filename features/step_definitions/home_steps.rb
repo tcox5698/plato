@@ -1,8 +1,9 @@
 When(/^I am not logged in$/) do
 end
 
-And(/^I navigate to home page$/) do
+And(/^I visit the Home page$/) do
   visit '/'
+  expect(page).to have_content 'Bring your ideas out of the cave!'
 end
 
 Then(/^I see the landing page$/) do

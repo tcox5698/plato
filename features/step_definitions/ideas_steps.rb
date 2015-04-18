@@ -48,3 +48,8 @@ end
 Then(/^I do not see idea '(.*)'$/) do |idea_name|
   expect(page).not_to have_content idea_name
 end
+
+Then(/^I see the Ideas page$/) do
+  expect(page).to have_content 'Ideas'
+  expect(page).to have_content 'Profit rating'
+end
