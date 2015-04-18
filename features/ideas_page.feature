@@ -4,7 +4,7 @@ Feature: Ideas page
   Scenario: Anonymous user does not see Ideas page
     When I am not logged in
     And I visit the Ideas page
-    Then I see the login page
+    Then I see the Login page
     And I see a login link
     And I see the 'Please login' error message
 

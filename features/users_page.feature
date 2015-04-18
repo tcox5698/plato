@@ -4,7 +4,7 @@ Feature: Users page
   Scenario: Anonymous user can not see users
     Given I am not logged in
     When I visit the Users page
-    Then I see the login page
+    Then I see the Login page
     And I see the 'Please login' error message
 
   Scenario: Authenticated user can only see self
