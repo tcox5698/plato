@@ -6,5 +6,5 @@ Feature: New user registration
     And I register user 'register@me.com' with password 'Password7!'
     Then I see the Login page
     When I log in as 'register@me.com' with password 'Password7!'
-    Then I see the Ideas page
+    Then I see the landing page
     And I see the 'Logout' link
