@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'controllers/shared_controller_examples'
 
 describe UsersController, :type => :controller do
   let(:user_authenticated) { false }
@@ -18,7 +19,7 @@ describe UsersController, :type => :controller do
     end
 
     context 'when not authenticated' do
-      it 'should redirect to ideas' do
+      it 'should redirect to login' do
         expect(response).to redirect_to '/login'
       end
 
@@ -45,22 +46,15 @@ describe UsersController, :type => :controller do
   end
 
   describe 'GET index' do
+    it_behaves_like 'a controller get action when user is not authenticated', :index do
+      let(:request_params) { {} }
+    end
+
+    context 'when user is authenticated' do
     before do
       get :index, {}
     end
 
-    context 'when user is not authenticated' do
-      it 'redirects to login page' do
-        expect(response.code).to eq '302'
-        expect(response).to redirect_to '/login'
-      end
-
-      it 'shows the please login error' do
-        expect(flash[:alert]).to eq 'Please login first'
-      end
-    end
-
-    context 'when user is authenticated' do
       let(:user_authenticated) { true }
 
       context 'when other users exist' do
@@ -73,25 +67,17 @@ describe UsersController, :type => :controller do
     end
   end
 
+  describe 'GET edit' do
+    it_behaves_like 'a controller get action when user is not authenticated', :edit do
+      let(:request_params) { { :id => @user.to_param } }
+    end
+  end
+
   describe 'GET show' do
     let(:requested_user_id) { @user.to_param }
 
-
-    context 'when user is not authenticated' do
-
-      let(:user_authenticated) { false }
-      before do
-        get :show, { :id => requested_user_id }
-      end
-      describe 'the response' do
-        it 'redirects to login page' do
-          expect(response).to redirect_to '/login'
-        end
-
-        it 'notifies the user they need to login' do
-          expect(flash[:alert]).to eq 'Please login first'
-        end
-      end
+    it_behaves_like 'a controller get action when user is not authenticated', :show do
+      let(:request_params) { { :id => @user.to_param } }
     end
 
     context 'when user is authenticated' do

@@ -3,38 +3,41 @@ require 'rails_helper'
 RSpec.describe UserSessionsController, :type => :controller do
 
   describe '#new' do
-    it 'renders the login page' do
-      expect(get(:new)).to render_template 'new'
+    let(:mock_new_user) { double 'mock_user' }
+    before do
+      allow(User).to receive(:new) { mock_new_user }
     end
 
-    it 'assigns a new user' do
+    it 'renders the login page and assigns new user' do
       get :new
-      expect(assigns(:user)).to be_a User
+      expect(response).to render_template 'new'
+      expect(assigns(:user)).to be mock_new_user
     end
   end
 
   describe '#create' do
-    context 'when valid email and password posted' do
       let(:input_email) { 'bob@secret.com' }
       let(:input_password) { 'secret!1' }
+
+    context 'when sorcery login returns a user' do
+      let(:mock_user) { double 'mock_user' }
       before do
-        @user = User.create!(email: input_email, password: input_password, password_confirmation: input_password)
+        allow(controller).to receive(:login).with(input_email, input_password) { mock_user }
         post :create, { email: input_email, password: input_password }
       end
-      it 'creates a session' do
-        expect(assigns(:user)).to eq @user
-      end
-      it 'redirects to landing page' do
+      it 'creates a session and redirects to landing page' do
+        expect(assigns(:user)).to eq mock_user
         expect(response).to redirect_to '/'
       end
     end
 
-    context 'when invalid email and password posted' do
-      before {post :create, { email: 'bob@here.com', password: 'secret' }}
-      it 'renders the login page' do
-        expect(response).to render_template 'new'
+    context 'when sorcery login returns nil' do
+      before do
+        allow(controller).to receive(:login).with(input_email, input_password) { nil }
+        post :create, { email: input_email, password: input_password }
       end
-      it 'displays login error message' do
+      it 'renders the login page and displays error message' do
+        expect(response).to render_template 'new'
         expect(flash[:alert]).to eq 'Login failed'
       end
     end
