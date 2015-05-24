@@ -1,4 +1,6 @@
-require 'rails_helper'
+require 'model_spec_helper'
+require 'acl9_model_spec_helper'
+require File.expand_path '../../../app/models/idea', __FILE__
 
 RSpec.describe Idea, :type => :model do
   it { is_expected.to respond_to(:name) }
@@ -14,6 +16,7 @@ RSpec.describe Idea, :type => :model do
   it { is_expected.to validate_presence_of(:name) }
 
   it { is_expected.to allow_value(nil).for(:description)}
+  specify { expect(Idea).to act_as_authorization_object }
 end
 
 # == Schema Information
