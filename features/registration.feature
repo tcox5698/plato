@@ -1,4 +1,3 @@
-@javascript
 Feature: New user registration
 
   Scenario: When a user registers without OAuth they land on the login page.

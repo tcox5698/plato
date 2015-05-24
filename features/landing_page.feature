@@ -1,4 +1,3 @@
-@javascript
 Feature: Landing page
 
   Scenario: Anonymous user sees landing page
