@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'controllers/shared_controller_examples'
 
 describe IdeasController, :type => :controller do
 
@@ -28,12 +29,8 @@ describe IdeasController, :type => :controller do
   end
 
   describe 'GET index' do
-    context 'when user is anonymous' do
-      let(:user_authenticated) { false }
-      it 'redirects to login page' do
-        get :index, {}
-        expect(response).to redirect_to '/login'
-      end
+    it_behaves_like 'a controller get action when user is not authenticated', :index do
+      let(:request_params) { {} }
     end
 
     context 'when user is authenticated' do
@@ -63,6 +60,14 @@ describe IdeasController, :type => :controller do
     before do
       @idea = Idea.create! valid_attributes
       @user.has_role!(:owner, @idea) if user_owns_idea
+    end
+
+    it_behaves_like 'a controller get action when user is not authenticated', :show do
+      let(:request_params) { { :id => @idea.to_param } }
+    end
+
+    context 'user is authenticated' do
+      before do
       begin
         get :show, { :id => @idea.to_param }, valid_session
       rescue => e
@@ -70,8 +75,6 @@ describe IdeasController, :type => :controller do
       end
 
     end
-
-    context 'user is authenticated' do
       context 'when user owns the requested idea' do
         let(:user_owns_idea) { true }
         it 'assigns the requested idea as @idea' do
@@ -93,6 +96,10 @@ describe IdeasController, :type => :controller do
   end
 
   describe 'GET new' do
+    it_behaves_like 'a controller get action when user is not authenticated', :new do
+      let(:request_params) { {} }
+    end
+
     it 'assigns a new idea as @idea' do
       get :new, {}, valid_session
       expect(assigns(:idea)).to be_a_new(Idea)
@@ -103,14 +110,9 @@ describe IdeasController, :type => :controller do
     before do
       @idea = Idea.create! valid_attributes
     end
-    context 'when user not authenticated' do
-      let(:user_authenticated) { false }
 
-      it 'redirects to login page' do
-        @user.has_role! :owner, @idea
-        get :edit, { :id => @idea.to_param }, valid_session
-        expect(response).to redirect_to('/login')
-      end
+    it_behaves_like 'a controller get action when user is not authenticated', :edit do
+      let(:request_params) { { :id => @idea.to_param } }
     end
 
     context 'when user authenticated but requesting someone elses idea' do
