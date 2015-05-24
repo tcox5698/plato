@@ -70,8 +70,8 @@ Before do |scenario|
   @step = 0
 end
 
-AfterStep do |scenario|
-  file_name = "tmp/#{scenario.name.gsub(' ','_')}-#{@step}-#{scenario.steps.to_a[@step].gherkin_statement.name.gsub(' ','_')}.png"
-  page.save_screenshot(file_name)
-  @step += 1
-end
+# AfterStep do |scenario|
+#   file_name = "tmp/#{scenario.name.gsub(' ','_')}-#{@step}-#{scenario.steps.to_a[@step].gherkin_statement.name.gsub(' ','_')}.png"
+#   page.save_screenshot(file_name)
+#   @step += 1
+# end

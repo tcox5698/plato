@@ -1,4 +1,3 @@
-@javascript
 Feature: Ideas page
 
   Scenario: Anonymous user does not see Ideas page

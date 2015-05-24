@@ -1,4 +1,3 @@
-@javascript
 Feature: Users page
 
   Scenario: Anonymous user can not see users
