@@ -187,6 +187,8 @@ GEM
     shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
     spring (1.2.0)
+    spring-commands-rspec (1.0.4)
+      spring (>= 0.9.1)
     sprockets (2.12.3)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -246,6 +248,7 @@ DEPENDENCIES
   shoulda-matchers
   sorcery!
   spring
+  spring-commands-rspec
   therubyracer
   turbolinks
   twitter-bootstrap-rails
