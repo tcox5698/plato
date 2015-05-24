@@ -61,6 +61,7 @@ headless = Headless.new
 headless.start
 
 Capybara.javascript_driver = :webkit
+Capybara.default_wait_time = 0.001
 
 Rails.application.configure do
   config.consider_all_requests_local = false

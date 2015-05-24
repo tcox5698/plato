@@ -23,7 +23,7 @@ Then(/^I see only the following ideas$/) do |table|
 end
 
 When(/^I create idea '(.*)' as user '(.*)' with password '(.*)'$/) do |idea_name, email, password|
-  click_link 'Logout' if page.has_link? 'Logout'
+  click_link 'Logout' unless page.has_no_link? 'Logout'
   visit '/'
   expect(page).to have_link 'Login'
   steps %Q{
@@ -46,7 +46,7 @@ When(/^I go directly to the idea '(.*)'$/) do |idea_name|
 end
 
 Then(/^I do not see idea '(.*)'$/) do |idea_name|
-  expect(page).not_to have_content idea_name
+  expect(page).to have_no_content idea_name
 end
 
 Then(/^I see the Ideas page$/) do
