@@ -26,6 +26,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring', group: :development
+gem 'spring-commands-rspec', group: :development
+
 gem 'ruby-debug-ide', group: [:development,:test]
 gem 'debase', group: [:development,:test]
 
@@ -45,7 +47,7 @@ gem 'annotate'
 gem 'acl9'
 
 group :test do
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', :require => false
   gem 'rspec'
   gem 'rspec-rails'
   gem 'cucumber-rails', :require => false
